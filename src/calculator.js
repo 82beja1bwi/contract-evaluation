@@ -83,11 +83,11 @@ export default class Calculator {
 
           // shouldnt remove. helpful and actually used in functional tests
           // could exclude for prod
-          console.log(score, '   ', [
-            consentCombinations[i],
-            contentKey,
-            costKey
-          ])
+          // console.log(score, '   ', [
+          //   consentCombinations[i],
+          //   contentKey,
+          //   costKey
+          // ])
 
           minHeap.add({ score, contract: { consent: [...consentCombinations[i]], content: contentKey, cost: costKey } })
         }
@@ -98,22 +98,23 @@ export default class Calculator {
 
     const bestContracts = minHeap.getHeap()
 
+
+
     for (let i = 0; i < bestContracts.length; i++) {
-      console.log(bestContracts)
-      const tempContract = bestContracts[i].contract
+      const tempContract = bestContracts[i]?.contract
       const consent = new Consent()
 
       Object.keys(sitesScoredPreferences.consent.resolutions).forEach(
         (resolution, index) => {
-          consent[resolution] = tempContract.consent[index]
+          consent[resolution] = tempContract?.consent[index]
         }
       )
 
       const contract = new Contract()
-        .setCost(tempContract.cost)
-        .setContent(tempContract.content)
+        .setCost(tempContract?.cost)
+        .setContent(tempContract?.content)
         .setConsent(consent)
-        .setScore(bestContracts[i].score)
+        .setScore(bestContracts[i]?.score)
 
       bestContracts[i] = contract
     }

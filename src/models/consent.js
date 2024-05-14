@@ -1,7 +1,7 @@
 /// Consent in bool
 /// Current state is bool = true
 export default class Consent {
-  constructor () {
+  /*constructor () {
     this.analytics = false
     this.marketing = false
     this.personalizedContent = false
@@ -106,5 +106,5 @@ export default class Consent {
       .setPersonalizedContent(object.personalizedContent || false)
 
     return consent
-  }
+  }*/
 }
