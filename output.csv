@@ -1,4 +1,4 @@
-u_cost_rel,u_consent_rel,u_content_rel,s_cost_rel,s_consent_rel,s_content_rel,score_binary_2c,score_binary_3c,score_562_2c,score_562_3c,score_532_2c,score_532_3c,score_524_2c, score_524_3c, score_564_2c, score_564_3c,
+u_cost_rel,u_consent_rel,u_content_rel,s_cost_rel,s_consent_rel,s_content_rel,score_binary_2c,score_binary_3c,score_562_2c,score_562_3c,score_532_2c,score_532_3c,score_524_2c,score_524_3c,score_564_2c,score_564_3c,
 0,0.1,0.9,0,0.1,0.9,9000,9000,9025,9025,9025,9025,9000,9000,9025,9025,
 0,0.1,0.9,0,0.2,0.8,9000,9000,9000,9000,9000,9000,9000,9000,9000,9000,
 0,0.1,0.9,0,0.3,0.7,9000,9000,9000,9000,9000,9000,9000,9000,9000,9000,

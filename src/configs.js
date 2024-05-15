@@ -1,4 +1,4 @@
-import ScoredPreferences, { Issue } from "./models/scored_preferences.js";
+import ScoredPreferences, { Issue } from "./domain/models/scored_preferences.js";
 // Vary Relevances Of Issues
 const relevanciesOfIssues = [
   [0.0, 0.1, 0.9],

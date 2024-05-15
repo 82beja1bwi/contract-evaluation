@@ -1,5 +1,5 @@
 import fs from "fs";
-import Calculator from "./calculator.js";
+import Calculator from "./domain/calculator.js";
 import {
   relevanciesOfIssues,
   sitesPrefs562,
@@ -19,7 +19,7 @@ fs.unlinkSync("output.csv");
 const calculator = new Calculator();
 //prep header of csv
 const header =
-  "u_cost_rel,u_consent_rel,u_content_rel,s_cost_rel,s_consent_rel,s_content_rel,score_binary_2c,score_binary_3c,score_562_2c,score_562_3c,score_532_2c,score_532_3c,score_524_2c, score_524_3c, score_564_2c, score_564_3c,\n";
+  "u_cost_rel,u_consent_rel,u_content_rel,s_cost_rel,s_consent_rel,s_content_rel,score_binary_2c,score_binary_3c,score_562_2c,score_562_3c,score_532_2c,score_532_3c,score_524_2c,score_524_3c,score_564_2c,score_564_3c,\n";
 fs.appendFileSync("output.csv", header, "utf8");
 
 for (const relevanciesOfUser of relevanciesOfIssues) {
