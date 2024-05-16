@@ -1,7 +1,10 @@
 /// Consent in bool
 /// Current state is bool = true
 export default class Consent {
-  /*constructor () {
+  constructor () {
+    // MODIFICATION HERE ----
+    this.all = false
+    // -----
     this.analytics = false
     this.marketing = false
     this.personalizedContent = false
@@ -52,28 +55,29 @@ export default class Consent {
   }
 
   toString () {
-    let string = ''
+    let string = "";
+
 
     if (this.analytics) {
-      string += 'analytics '
+      string += "analytics ";
     }
     if (this.marketing) {
-      string += 'marketing '
+      string += "marketing ";
     }
     if (this.personalizedContent) {
-      string += 'personalizedContent '
+      string += "personalizedContent ";
     }
     if (this.personalizedAds) {
-      string += 'personalizedAds '
+      string += "personalizedAds ";
     }
     if (this.externalContent) {
-      string += 'externalContent '
+      string += "externalContent ";
     }
     if (this.identification) {
-      string += 'identification '
+      string += "identification ";
     }
 
-    return string.trimEnd()
+    return string.trimEnd();
   }
 
   // create instance from consent string (s. header)
@@ -106,5 +110,5 @@ export default class Consent {
       .setPersonalizedContent(object.personalizedContent || false)
 
     return consent
-  }*/
+  }
 }

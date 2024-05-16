@@ -124,8 +124,6 @@ const usersPrefs562 = new ScoredPreferences()
   .setContent(
     new Issue().setRelevance(0.4).setResolutions({
       100: 1,
-    //   90: 7 / 8,
-    //   70: 5 / 8,
       50: 3 / 8,
     })
   );
@@ -152,8 +150,6 @@ const sitesPrefs562 = new ScoredPreferences()
   .setContent(
     new Issue().setRelevance(0.3).setResolutions({
       100: 1,
-    //   90: 7 / 8,
-    //   70: 6 / 8,
       50: 1 / 2,
     })
   );
@@ -179,8 +175,6 @@ const usersPrefs532 = new ScoredPreferences()
   .setContent(
     new Issue().setRelevance(0.4).setResolutions({
       100: 1,
-      //   90: 7 / 8,
-      //   70: 5 / 8,
       50: 3 / 8,
     })
   );
@@ -204,8 +198,6 @@ const sitesPrefs532 = new ScoredPreferences()
   .setContent(
     new Issue().setRelevance(0.3).setResolutions({
       100: 1,
-      //   90: 7 / 8,
-      //   70: 6 / 8,
       50: 1 / 2,
     })
   );
