@@ -83,11 +83,11 @@ export default class Calculator {
 
           // shouldnt remove. helpful and actually used in functional tests
           // could exclude for prod
-          // console.log(score, '   ', [
-          //   consentCombinations[i],
-          //   contentKey,
-          //   costKey
-          // ])
+          console.log(score, '   ', [
+            consentCombinations[i],
+            contentKey,
+            costKey
+          ])
 
           minHeap.add({ score, contract: { consent: [...consentCombinations[i]], content: contentKey, cost: costKey } })
         }

@@ -6,28 +6,19 @@ export default class MinHeap {
   constructor (noOfElements) {
     this.noOfElements = noOfElements
     this.heap = []
-    this.highscore2C = 0
-    this.highscore3C = 0
-    this.bestContract2C = null
-    this.bestContract3C = null
+    this.highscore = 0
+    this.bestContract = null
   }
 
   getHeap () {
-    return [
-      {score: this.highscore2C,
-      contract: this.bestContract2C,},
-      {score: this.highscore3C,
-      contract: this.bestContract3C}
-    ]
+    return [{score: this.highscore,
+      contract: this.bestContract,}]
   }
 
   add ({ score, contract }) {
-    if (contract.cost == 0 && score > this.highscore2C) {
-      this.highscore2C = score
-      this.bestContract2C = contract
-    } else if (contract.cost > 0 && score > this.highscore3C) {
-      this.highscore3C = score
-      this.bestContract3C = contract
+    if(score > this.highscore){
+      this.highscore = score
+      this.bestContract = contract
     }
   }
 }
