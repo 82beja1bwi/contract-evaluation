@@ -62,9 +62,9 @@ const contentPrefs = {
       },
     },
     threeC: {
-      100: 0.7,
-      80: 0.8,
-      70: 1,
+      100: 0.8,
+      80: 1,
+      70: 0.7,
       50: 0.5,
       20: 0,
     },
@@ -88,7 +88,7 @@ const contentPrefs = {
       },
     },
     threeC: {
-      100: 0.8,
+      100: 0.7,
       80: 1,
       70: 0.8,
       50: 0.5,
@@ -178,25 +178,33 @@ const u_prefs_67 = new ScoredPreferences()
 
 // -------------- 3C Preferences --------------- //
 
-const s_prefs_534 = new ScoredPreferences()
+const s_prefs_535 = new ScoredPreferences()
   .setCost(new Issue().setResolutions(sitesPrefs(null).threeC.cost))
   .setConsent(new Issue().setResolutions(sitesPrefs(false).threeC.consent))
-  .setContent(new Issue().setResolutions(sitesPrefs(null).threeC.content));
+  .setContent(
+    new Issue().setResolutions(sitesPrefs(null, false).threeC.content)
+  );
 
-const s_prefs_564 = new ScoredPreferences()
+const s_prefs_565 = new ScoredPreferences()
   .setCost(new Issue().setResolutions(sitesPrefs(null).threeC.cost))
   .setConsent(new Issue().setResolutions(sitesPrefs(true).threeC.consent))
-  .setContent(new Issue().setResolutions(sitesPrefs(null).threeC.content));
+  .setContent(
+    new Issue().setResolutions(sitesPrefs(null, false).threeC.content)
+  );
 
-const u_prefs_534 = new ScoredPreferences()
+const u_prefs_535 = new ScoredPreferences()
   .setCost(new Issue().setResolutions(userPrefs(null).threeC.cost))
   .setConsent(new Issue().setResolutions(userPrefs(false).threeC.consent))
-  .setContent(new Issue().setResolutions(userPrefs(null).threeC.content));
+  .setContent(
+    new Issue().setResolutions(userPrefs(null, false).threeC.content)
+  );
 
-const u_prefs_564 = new ScoredPreferences()
+const u_prefs_565 = new ScoredPreferences()
   .setCost(new Issue().setResolutions(userPrefs(null).threeC.cost))
   .setConsent(new Issue().setResolutions(userPrefs(true).threeC.consent))
-  .setContent(new Issue().setResolutions(userPrefs(null).threeC.content));
+  .setContent(
+    new Issue().setResolutions(userPrefs(null, false).threeC.content)
+  );
 
 // --------------    Export   --------------- //
 
@@ -206,11 +214,11 @@ export {
   u_prefs_34,
   u_prefs_64,
   u_prefs_67,
-  u_prefs_534,
-  u_prefs_564,
+  u_prefs_535,
+  u_prefs_565,
   s_prefs_34,
   s_prefs_64,
   s_prefs_67,
-  s_prefs_534,
-  s_prefs_564,
+  s_prefs_535,
+  s_prefs_565,
 };

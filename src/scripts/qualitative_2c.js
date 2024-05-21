@@ -26,7 +26,7 @@ function calcContracts(usersPrefs, sitesPrefs) {
   );
 }
 
-export default function runQualititativeAnalysis() {
+export default function run2CQualititativeAnalysis() {
   //prep header of csv
   const header =
     "user,site,default,score_34,score_64,score_67,consent_34,consent_64,consent_67,content_34,content_64,content_67,\n";
