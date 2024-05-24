@@ -26,7 +26,7 @@ function calcContracts(usersPrefs, sitesPrefs) {
 export default function run3CQualititativeAnalysis() {
   //prep header of csv
   const header =
-    "user,site,default,score_535,score_565,consent_535,consent_565,content_535,content_565,cost_535,cost_565,\n";
+    "user,site,reality_assumption,default_new,score_535,score_565,consent_535,consent_565,content_535,content_565,cost_535,cost_565,\n";
 
   const filePath = "qualitative_3c.csv";
 
@@ -43,12 +43,24 @@ export default function run3CQualititativeAnalysis() {
       const s_consent_rel = relevanciesOfSite[1];
       const s_content_rel = relevanciesOfSite[2];
 
-      const default_score = Math.round(
+      // default score with current protocol and user agent
+      const default_score_new = Math.round(
         10000 *
           //users score
           (u_cost_rel * 0.8 + u_consent_rel * 1 + u_content_rel / 2) *
           //sites score
           (s_cost_rel * 0 + s_consent_rel * 0 + s_content_rel / 2),
+        2
+      );
+
+      // default score without protocol or in current reality
+      // consent full...
+      const reality_assumption = Math.round(
+        10000 *
+          //users score
+          (u_cost_rel * 0.7 + u_consent_rel * 0 + u_content_rel * 1) *
+          //sites score
+          (s_cost_rel * 0.7 + s_consent_rel * 1 + s_content_rel * 1),
         2
       );
 
@@ -72,7 +84,7 @@ export default function run3CQualititativeAnalysis() {
       // Create CSV line
       let csvLine = `${relevanciesOfUser.join(" ")},${relevanciesOfSite.join(
         " "
-      )},${default_score},`;
+      )},${reality_assumption},${default_score_new},`;
 
       for (const contract of contracts) {
         csvLine += `${contract[0].score},`;

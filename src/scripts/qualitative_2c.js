@@ -29,7 +29,7 @@ function calcContracts(usersPrefs, sitesPrefs) {
 export default function run2CQualititativeAnalysis() {
   //prep header of csv
   const header =
-    "user,site,default,score_34,score_64,score_67,consent_34,consent_64,consent_67,content_34,content_64,content_67,\n";
+    "user,site,default_old,default_new,score_34,score_64,score_67,consent_34,consent_64,consent_67,content_34,content_64,content_67,\n";
 
   const filePath = "qualitative_2c.csv";
 
@@ -46,14 +46,26 @@ export default function run2CQualititativeAnalysis() {
       const s_consent_rel = relevanciesOfSite[0];
       const s_content_rel = relevanciesOfSite[1];
 
-      const default_score = Math.round(
+      // default score with current protocol and user agent
+      const default_score_new = Math.round(
         10000 * //u_cost_rel * 0 +
           //users score
-          (u_consent_rel * 1 +
-            u_content_rel / 2) * //s_cost_rel * 0 +
-              //sites score
-              (s_consent_rel * 0 + s_content_rel / 2),2)
-      
+          (u_consent_rel * 1 + u_content_rel / 2) * //s_cost_rel * 0 +
+          //sites score
+          (s_consent_rel * 0 + s_content_rel / 2),
+        2
+      );
+
+      // default score without protocol or in current reality
+      // consent full...
+      const default_score_old = Math.round(
+        10000 * //u_cost_rel * 0 +
+          //users score
+          (u_consent_rel * 0 + u_content_rel / 2) * //s_cost_rel * 0 +
+          //sites score
+          (s_consent_rel * 1 + s_content_rel / 2),
+        2
+      );
 
       let contracts = [];
 
@@ -74,7 +86,9 @@ export default function run2CQualititativeAnalysis() {
       }
 
       // Create CSV line
-      let csvLine = `${relevanciesOfUser.join(' ')},${relevanciesOfSite.join(' ')},${default_score},`;
+      let csvLine = `${relevanciesOfUser.join(" ")},${relevanciesOfSite.join(
+        " "
+      )},${default_score_old},${default_score_new},`;
 
       for (const contract of contracts) {
         csvLine += `${contract[0].score},`;
