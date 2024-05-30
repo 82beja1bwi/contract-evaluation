@@ -1,7 +1,7 @@
 import MinHeap from './min_heap.js'
-import Consent from './models/consent.js'
-import Contract from './models/contract.js'
-import ScoredPreferences from './models/scored_preferences.js'
+import Consent from '../models/consent.js'
+import Contract from '../models/contract.js'
+import ScoredPreferences from '../models/scored_preferences.js'
 
 /**
  * can calculate Nash-optimal contracts
@@ -15,11 +15,11 @@ export default class Calculator {
    *
    * @param {*} scoredPreferences to be transformed into the function
    */
-  calcUsersScoringFunction (scoredPreferences) {
+  calcUsersScoringFunction(scoredPreferences) {
     if (!(scoredPreferences instanceof ScoredPreferences)) {
-      throw Error('Preferences must be in data model ScoredPreferences')
+      throw Error("Preferences must be in data model ScoredPreferences");
     }
-    return this.#preferencesDataToFunction(scoredPreferences, true)
+    return this.#preferencesDataToFunction(scoredPreferences, true);
   }
 
   /**
@@ -27,11 +27,11 @@ export default class Calculator {
    *
    * @param {*} scoredPreferences to be transformed into the function
    */
-  calcSitesScoringFunction (scoredPreferences) {
+  calcSitesScoringFunction(scoredPreferences) {
     if (!(scoredPreferences instanceof ScoredPreferences)) {
-      throw Error('Preferences must be in data model ScoredPreferences')
+      throw Error("Preferences must be in data model ScoredPreferences");
     }
-    return this.#preferencesDataToFunction(scoredPreferences, false)
+    return this.#preferencesDataToFunction(scoredPreferences, false);
   }
 
   /**
@@ -46,25 +46,25 @@ export default class Calculator {
    * @param {} noOfBestContracts how many best contracts should be returned ? 1 or more?
    * @returns {[Contract]} the array with at least the nash optimal contract and maybe the next best contracts
    */
-  calcNashContracts (
+  calcNashContracts(
     usersScoredPreferences,
     sitesScoredPreferences,
     usersScoringFunction,
     sitesScoringFunction,
     noOfBestContracts
   ) {
-    const minHeap = new MinHeap(noOfBestContracts)
+    const minHeap = new MinHeap(noOfBestContracts);
     // let highscore = 0
     // let bestContract = null
     const costResolutions = sitesScoredPreferences.cost?.resolutions ?? {
-      0: null
-    }
-    const consentCombinations = []
+      0: null,
+    };
+    const consentCombinations = [];
     const limit = Object.keys(
       sitesScoredPreferences.consent.resolutions
-    ).length
+    ).length;
 
-    this.#combineBools(limit, [], consentCombinations)
+    this.#combineBools(limit, [], consentCombinations);
 
     // For all possible combinations of cost, content and consent calculate the product scoring functions
     for (const costKey in costResolutions) {
@@ -79,7 +79,18 @@ export default class Calculator {
             sitesScoredPreferences.content.resolutions[contentKey],
             usersScoredPreferences.cost?.resolutions?.[costKey],
             sitesScoredPreferences.cost?.resolutions?.[costKey]
-          )
+          );
+
+          // MODIFICATION for contract evaluation
+          const imbalance = this.#calcContractImbalance(
+            usersScoringFunction,
+            sitesScoringFunction,
+            consentCombinations[i],
+            usersScoredPreferences.content.resolutions[contentKey],
+            sitesScoredPreferences.content.resolutions[contentKey],
+            usersScoredPreferences.cost?.resolutions?.[costKey],
+            sitesScoredPreferences.cost?.resolutions?.[costKey]
+          );
 
           // shouldnt remove. helpful and actually used in functional tests
           // could exclude for prod
@@ -89,37 +100,47 @@ export default class Calculator {
           //   costKey
           // ])
 
-          minHeap.add({ score, contract: { consent: [...consentCombinations[i]], content: contentKey, cost: costKey } })
+          minHeap.add({
+            score,
+            contract: {
+              consent: [...consentCombinations[i]],
+              content: contentKey,
+              cost: costKey,
+              //MODIFICATION
+              imbalance,
+            },
+          });
         }
       }
     }
     // console.log('highscore ', highscore)
     // console.log(bestContract)
 
-    const bestContracts = minHeap.getHeap()
-    console.log(bestContracts)
-
+    const bestContracts = minHeap.getHeap();
+    console.log(bestContracts);
 
     for (let i = 0; i < bestContracts.length; i++) {
-      const tempContract = bestContracts[i]?.contract
-      const consent = new Consent()
+      const tempContract = bestContracts[i]?.contract;
+      const consent = new Consent();
 
       Object.keys(sitesScoredPreferences.consent.resolutions).forEach(
         (resolution, index) => {
-          consent[resolution] = tempContract?.consent[index]
+          consent[resolution] = tempContract?.consent[index];
         }
-      )
+      );
 
       const contract = new Contract()
         .setCost(tempContract?.cost)
         .setContent(tempContract?.content)
         .setConsent(consent)
         .setScore(bestContracts[i]?.score)
+        //MODIFICATION
+        .setImbalance(tempContract?.imbalance);
 
-      bestContracts[i] = contract
+      bestContracts[i] = contract;
     }
 
-    return bestContracts
+    return bestContracts;
   }
 
   /**
@@ -154,36 +175,36 @@ export default class Calculator {
    */
 
   #preferencesDataToFunction = (scoredPreferences, isUserPreferences) => {
-    const is3CNegotiation = scoredPreferences.cost?.relevance
-    const consentResolutions = scoredPreferences.consent.resolutions
-    const relevanceOfConsent = scoredPreferences.consent.relevance
-    const relevanceOfContent = scoredPreferences.content.relevance
+    const is3CNegotiation = scoredPreferences.cost?.relevance;
+    const consentResolutions = scoredPreferences.consent.resolutions;
+    const relevanceOfConsent = scoredPreferences.consent.relevance;
+    const relevanceOfContent = scoredPreferences.content.relevance;
 
     return function (bools, contentScore, costScore) {
       if (bools.length < Object.keys(consentResolutions).length) {
-        throw new Error('Not enough bools provided')
+        throw new Error("Not enough bools provided");
       }
-      let consentScore = isUserPreferences ? 1 : 0
-      let i = 0
+      let consentScore = isUserPreferences ? 1 : 0;
+      let i = 0;
       for (const key in consentResolutions) {
-        const product = consentResolutions[key] * bools[i]
+        const product = consentResolutions[key] * bools[i];
         isUserPreferences
           ? (consentScore -= product)
-          : (consentScore += product)
+          : (consentScore += product);
         // TODO this is currently missing the case, where reject all still gets 20 base points
-        i++
+        i++;
       }
 
       let result =
-        relevanceOfConsent * consentScore + relevanceOfContent * contentScore
+        relevanceOfConsent * consentScore + relevanceOfContent * contentScore;
 
       if (is3CNegotiation) {
-        result += scoredPreferences.cost.relevance * costScore
+        result += scoredPreferences.cost.relevance * costScore;
       }
 
-      return Math.round(100 * result)
-    }
-  }
+      return Math.round(100 * result);
+    };
+  };
 
   /**
    * Recursively create a list of all possible consen combinations
@@ -199,18 +220,18 @@ export default class Calculator {
   ) => {
     if (limit === 0) {
       // console.log(bools)// this i want to add to a list of lists
-      resultingListOfBoolsLists.push([...bools])
-      return
+      resultingListOfBoolsLists.push([...bools]);
+      return;
     }
     // combine remaining consent options until last option included in combination
-    limit--
+    limit--;
 
     for (const bool of [false, true]) {
-      bools.push(bool)
-      this.#combineBools(limit, bools, resultingListOfBoolsLists)
-      bools.pop(bool)
+      bools.push(bool);
+      this.#combineBools(limit, bools, resultingListOfBoolsLists);
+      bools.pop(bool);
     }
-  }
+  };
 
   /**
    * Calculate the value (product) of a contract
@@ -243,6 +264,40 @@ export default class Calculator {
         sitesContentPreference,
         sitesCostPreference
       )
-    )
-  }
+    );
+  };
+
+  /**
+   * MODIFICATION FOR CONTRACT ANALYSIS
+   * @param {Function} usersScoringFunction
+   * @param {Function} sitesScoringFunction
+   * @param {[Boolean]} consentCombination
+   * @param {number} usersContentPreference
+   * @param {number} sitesContentPreference
+   * @param {number} usersCostPreference
+   * @param {number} sitesCostPreference
+   * @returns
+   */
+  #calcContractImbalance = (
+    usersScoringFunction,
+    sitesScoringFunction,
+    consentCombination,
+    usersContentPreference,
+    sitesContentPreference,
+    usersCostPreference,
+    sitesCostPreference
+  ) => {
+    return (
+      usersScoringFunction(
+        consentCombination,
+        usersContentPreference,
+        usersCostPreference
+      ) -
+      sitesScoringFunction(
+        consentCombination,
+        sitesContentPreference,
+        sitesCostPreference
+      )
+    );
+  };
 }

@@ -4,8 +4,8 @@ import {
   u_prefs_565,
   s_prefs_535,
   s_prefs_565,
-} from "../configs/configs.js";
-import Calculator from "../domain/calculator.js";
+} from "../configs.js";
+import Calculator from "../../domain/qualitative_analysis/calculator.js";
 import fs from "fs";
 
 function calcContracts(usersPrefs, sitesPrefs) {
@@ -26,7 +26,7 @@ function calcContracts(usersPrefs, sitesPrefs) {
 export default function run3CQualititativeAnalysis() {
   //prep header of csv
   const header =
-    "user,site,reality_assumption,default_new,score_535,score_565,consent_535,consent_565,content_535,content_565,cost_535,cost_565,\n";
+    "user,site,reality_assumption,default_new,score_535,score_565,imbalance,consent_535,consent_565,content_535,content_565,cost_535,cost_565,\n";
 
   const filePath = "qualitative_3c.csv";
 
@@ -89,6 +89,8 @@ export default function run3CQualititativeAnalysis() {
       for (const contract of contracts) {
         csvLine += `${contract[0].score},`;
       }
+
+      csvLine += `${contracts[0][0].imbalance},`;
 
       const contract534 = contracts[0][0];
       const contract564 = contracts[1][0];

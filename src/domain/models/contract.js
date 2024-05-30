@@ -10,51 +10,59 @@ export default class Contract {
    * @param {number} cost
    * @param {number} content
    * @param score
+   * @param imbalance MODIFICATION for contract analysis
    */
-  constructor (hostName, consent, cost, content, score) {
-    this.hostName = hostName
-    this.consent = consent
-    this.cost = cost
-    this.content = content
-    this.score = score
+  constructor(hostName, consent, cost, content, score) {
+    this.hostName = hostName;
+    this.consent = consent;
+    this.cost = cost;
+    this.content = content;
+    this.score = score;
+    this.imbalance;
   }
 
-  setHostName (value) {
-    this.hostName = value
-    return this
+  setHostName(value) {
+    this.hostName = value;
+    return this;
   }
 
-  setConsent (value) {
-    this.consent = value
-    return this
+  setConsent(value) {
+    this.consent = value;
+    return this;
   }
 
-  setCost (value) {
-    this.cost = value
-    return this
+  setCost(value) {
+    this.cost = value;
+    return this;
   }
 
-  setContent (value) {
-    this.content = value
-    return this
+  setContent(value) {
+    this.content = value;
+    return this;
   }
 
-  setScore (value) {
-    this.score = value
-    return this
+  setScore(value) {
+    this.score = value;
+    return this;
+  }
+
+  //MODIFICATION
+  setImbalance(value) {
+    this.imbalance = value;
+    return this;
   }
 
   /** entity to instance */
-  static fromData (data) {
-    if (!data) return null
+  static fromData(data) {
+    if (!data) return null;
 
-    const consent = Consent.fromObject(data.consent)
+    const consent = Consent.fromObject(data.consent);
 
     return new Contract()
       .setHostName(data.hostName)
       .setConsent(consent)
       .setCost(data.cost)
       .setContent(data.content)
-      .setScore(data.score)
+      .setScore(data.score);
   }
 }

@@ -1,5 +1,5 @@
 /**
- * Modified minheap dependency
+ * MODIFICATION minheap dependency
  * Not actuall a minheap anymore...
  */
 export default class MinHeap {

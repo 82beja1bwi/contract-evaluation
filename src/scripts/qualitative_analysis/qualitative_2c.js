@@ -7,8 +7,8 @@ import {
   s_prefs_64,
   u_prefs_67,
   s_prefs_67,
-} from "../configs/configs.js";
-import Calculator from "../domain/calculator.js";
+} from "../configs.js";
+import Calculator from "../../domain/qualitative_analysis/calculator.js";
 import fs from "fs";
 
 function calcContracts(usersPrefs, sitesPrefs) {
@@ -29,7 +29,7 @@ function calcContracts(usersPrefs, sitesPrefs) {
 export default function run2CQualititativeAnalysis() {
   //prep header of csv
   const header =
-    "user,site,default_old,default_new,score_34,score_64,score_67,consent_34,consent_64,consent_67,content_34,content_64,content_67,\n";
+    "user,site,default_old,default_new,score_34,score_64,score_67,imbalance,consent_34,consent_64,consent_67,content_34,content_64,content_67,\n";
 
   const filePath = "qualitative_2c.csv";
 
@@ -93,6 +93,8 @@ export default function run2CQualititativeAnalysis() {
       for (const contract of contracts) {
         csvLine += `${contract[0].score},`;
       }
+
+      csvLine += `${contracts[0][0].imbalance},`;
 
       const contract34 = contracts[0][0];
       const contract64 = contracts[1][0];
