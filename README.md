@@ -18,6 +18,7 @@ To utilize this mock service:
 
 ## Structure
 
-- `src`: JS Code for data creation. Modules imported from Consent Agent. Config files
+- `src/scripts`: JS Code for data creation. Config files
+- `src/domain`: Modules under test imported from Consent Agent
 - csv files: Outputs of data creation
 - ipynb files: Data analysis
