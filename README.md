@@ -8,7 +8,7 @@ Experiments to evaluate if users and sites with different preferences can reach 
 ![image](https://github.com/user-attachments/assets/f842eb50-ec97-4c48-8958-e0eccc0c367b)
 
 
-- Config files hold prefrences for personas
+- Config files hold preferences for personas
 - JavaScript files calculate Nash-optimal contracts for every possible encounter
 - Data analysis in Jupyter Notebooks
 
