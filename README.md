@@ -14,14 +14,18 @@ Experiments to evaluate if users and sites with different preferences can reach 
 
 ## Usage
 
-Note: you can read the Jupyter Notebooks here in GitHub. If you want to execute code yourself, or would like to see a table of content, then you can do the following:
+**Note: you can read the Jupyter Notebooks here in GitHub**. If you want to execute code yourself, or would like to see a table of content, then you can do the following:
 
 Prerequisites: 
 
-- JavaScript ES6
+- NodeJS https://nodejs.org/en
+- Python https://www.python.org/downloads/
 - I recommend using VSCode with the Jupyter Extension, it allows you to nicely have a look at the JS as well as the python code
 
 1. Clone this repository to your local machine.
+2. `pip install seaborn`
+3. `pip install matplotlib`
+4. `pip install pandas`
 5. Run main method to generate data
 6. Run Jupyter Notebook
 
