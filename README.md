@@ -20,7 +20,7 @@ Prerequisites:
 
 - NodeJS https://nodejs.org/en
 - Python https://www.python.org/downloads/
-- I recommend using VSCode with the Jupyter Extension, it allows you to nicely have a look at the JS as well as the python code
+- I recommend using VSCode with the Jupyter Extension, so you have an optimal experience with both JavaScript and the Jupyter notebook
 
 1. Clone this repository to your local machine.
 2. `pip install seaborn`
